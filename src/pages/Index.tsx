@@ -1,393 +1,216 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    message: '',
+    message: ''
   });
-  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: 'Заявка отправлена!',
-      description: 'Мы свяжемся с вами в ближайшее время.',
+      title: "Заявка отправлена!",
+      description: "Наш мастер свяжется с вами в ближайшее время.",
     });
     setFormData({ name: '', phone: '', message: '' });
   };
 
-  const services = [
-    {
-      title: 'Диагностика холодильника',
-      description: 'Полная проверка всех систем и выявление неисправностей',
-      price: 'от 500 ₽',
-      icon: 'Search',
-    },
-    {
-      title: 'Ремонт компрессора',
-      description: 'Замена и ремонт компрессора любой сложности',
-      price: 'от 3000 ₽',
-      icon: 'Settings',
-    },
-    {
-      title: 'Замена терморегулятора',
-      description: 'Установка нового терморегулятора с гарантией',
-      price: 'от 1500 ₽',
-      icon: 'Thermometer',
-    },
-    {
-      title: 'Устранение утечки фреона',
-      description: 'Поиск и устранение утечки, заправка системы',
-      price: 'от 2500 ₽',
-      icon: 'Wind',
-    },
-    {
-      title: 'Замена уплотнителя двери',
-      description: 'Установка качественного уплотнителя для любых моделей',
-      price: 'от 800 ₽',
-      icon: 'DoorOpen',
-    },
-    {
-      title: 'Ремонт системы No Frost',
-      description: 'Восстановление работы системы автоматической разморозки',
-      price: 'от 2000 ₽',
-      icon: 'Snowflake',
-    },
-  ];
-
-  const advantages = [
-    {
-      icon: 'Award',
-      title: 'Опыт более 15 лет',
-      description: 'Успешно отремонтировано более 5000 холодильников',
-    },
-    {
-      icon: 'Clock',
-      title: 'Быстрый выезд',
-      description: 'Приедем в течение 2 часов после вашего звонка',
-    },
-    {
-      icon: 'Shield',
-      title: 'Гарантия 6 месяцев',
-      description: 'На все виды работ и установленные запчасти',
-    },
-    {
-      icon: 'Wrench',
-      title: 'Профессиональное оборудование',
-      description: 'Используем современные инструменты и оригинальные детали',
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b sticky top-0 bg-white z-50 shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <Icon name="Refrigerator" className="text-primary" size={32} />
-            <span className="text-xl font-bold text-secondary">РемонтХолод</span>
-          </div>
-          <nav className="hidden md:flex gap-6">
-            <a href="#services" className="text-foreground hover:text-primary transition-colors">
-              Услуги
-            </a>
-            <a href="#advantages" className="text-foreground hover:text-primary transition-colors">
-              Преимущества
-            </a>
-            <a href="#contact" className="text-foreground hover:text-primary transition-colors">
-              Контакты
-            </a>
-          </nav>
-          <Button size="lg" className="hidden md:flex gap-2">
-            <Icon name="Phone" size={20} />
-            +7 (999) 123-45-67
-          </Button>
-        </div>
-      </header>
-
-      <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      
+      <section className="bg-gradient-to-br from-primary/5 to-background py-20 flex-grow">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="mb-4 bg-primary/10 text-primary hover:bg-primary/20">
-                Работаем без выходных
-              </Badge>
-              <h1 className="text-4xl md:text-5xl font-bold text-secondary mb-6 leading-tight">
-                Профессиональный ремонт холодильников в Москве
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+                Профессиональный ремонт холодильников
               </h1>
-              <p className="text-lg text-muted-foreground mb-8">
-                Быстро устраним любую неисправность. Выезд мастера в день обращения. Гарантия на все работы.
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                Более 10 лет опыта. Ремонт любой сложности. Выезд мастера в день обращения. 
+                Гарантия на все виды работ до 12 месяцев.
               </p>
+              
+              <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                <div className="flex items-start gap-3 bg-card p-4 rounded-lg shadow-sm border">
+                  <Icon name="Clock" size={24} className="text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Быстрый выезд</h3>
+                    <p className="text-sm text-muted-foreground">В течение 2 часов после заявки</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3 bg-card p-4 rounded-lg shadow-sm border">
+                  <Icon name="Shield" size={24} className="text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Гарантия</h3>
+                    <p className="text-sm text-muted-foreground">До 12 месяцев на работы</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3 bg-card p-4 rounded-lg shadow-sm border">
+                  <Icon name="Wrench" size={24} className="text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Опыт</h3>
+                    <p className="text-sm text-muted-foreground">Более 10 лет на рынке</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3 bg-card p-4 rounded-lg shadow-sm border">
+                  <Icon name="CheckCircle" size={24} className="text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Качество</h3>
+                    <p className="text-sm text-muted-foreground">Оригинальные запчасти</p>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="gap-2">
-                  <Icon name="Phone" size={20} />
+                <Button 
+                  size="lg" 
+                  className="text-lg font-semibold"
+                  onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  <Icon name="Phone" size={20} className="mr-2" />
                   Вызвать мастера
                 </Button>
-                <Button size="lg" variant="outline" className="gap-2">
-                  <Icon name="MessageCircle" size={20} />
-                  Написать в WhatsApp
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="text-lg font-semibold"
+                  onClick={() => navigate('/services')}
+                >
+                  Наши услуги
                 </Button>
               </div>
-              <div className="mt-8 flex gap-6 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <Icon name="CheckCircle2" className="text-primary" size={20} />
-                  <span>Оригинальные запчасти</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Icon name="CheckCircle2" className="text-primary" size={20} />
-                  <span>Выезд бесплатно</span>
-                </div>
-              </div>
             </div>
-            <div className="relative">
-              <div className="bg-gradient-to-br from-primary to-blue-600 rounded-2xl p-8 text-white">
-                <Icon name="Refrigerator" size={200} className="mx-auto opacity-20" />
-                <div className="absolute top-8 right-8 bg-white rounded-lg p-4 text-secondary shadow-lg">
-                  <div className="text-3xl font-bold">15+</div>
-                  <div className="text-sm">лет опыта</div>
+
+            <div className="space-y-6">
+              <img 
+                src="https://cdn.poehali.dev/projects/0ef39b22-0f7f-493a-ba4f-46a6047fdf33/files/8b6167aa-b924-4420-9385-2670957983cb.jpg" 
+                alt="Профессиональный ремонт холодильников" 
+                className="rounded-lg shadow-lg w-full h-[300px] object-cover"
+              />
+              
+              <div className="bg-card rounded-lg shadow-lg p-8 border">
+                <div className="flex items-center gap-2 mb-6">
+                  <Icon name="ClipboardList" size={28} className="text-primary" />
+                  <h2 className="text-2xl font-bold text-foreground">Оставить заявку</h2>
                 </div>
-                <div className="absolute bottom-8 left-8 bg-white rounded-lg p-4 text-secondary shadow-lg">
-                  <div className="text-3xl font-bold">5000+</div>
-                  <div className="text-sm">ремонтов</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="advantages" className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
-              Почему выбирают нас
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Надежность и качество, проверенные временем
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {advantages.map((advantage, index) => (
-              <Card key={index} className="border-2 hover:border-primary transition-colors">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                    <Icon name={advantage.icon} className="text-primary" size={24} />
-                  </div>
-                  <CardTitle className="text-xl">{advantage.title}</CardTitle>
-                  <CardDescription className="text-base">{advantage.description}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="services" className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
-              Наши услуги
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Полный спектр работ по ремонту холодильников
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                    <Icon name={service.icon} className="text-primary" size={24} />
-                  </div>
-                  <CardTitle className="text-xl">{service.title}</CardTitle>
-                  <CardDescription className="text-base">{service.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-primary">{service.price}</span>
-                    <Button variant="outline" size="sm">
-                      Заказать
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-6">
-                Оставьте заявку
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Заполните форму, и наш специалист свяжется с вами в течение 15 минут
-              </p>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              
+              <form onSubmit={handleSubmit} className="space-y-4" id="contact-form">
                 <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                    Ваше имя
+                  </label>
                   <Input
-                    placeholder="Ваше имя"
+                    id="name"
+                    placeholder="Иван Иванов"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                   />
                 </div>
+
                 <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+                    Телефон
+                  </label>
                   <Input
+                    id="phone"
                     type="tel"
-                    placeholder="Телефон"
+                    placeholder="+7 (900) 123-45-67"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     required
                   />
                 </div>
+
                 <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                    Описание проблемы
+                  </label>
                   <Textarea
-                    placeholder="Опишите проблему с холодильником"
+                    id="message"
+                    placeholder="Опишите, что случилось с холодильником..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     rows={4}
                   />
                 </div>
-                <Button type="submit" size="lg" className="w-full gap-2">
-                  <Icon name="Send" size={20} />
+
+                <Button type="submit" className="w-full text-lg font-semibold" size="lg">
                   Отправить заявку
                 </Button>
-                <p className="text-xs text-muted-foreground text-center">
-                  Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
-                </p>
               </form>
-            </div>
 
-            <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-secondary mb-6">Контакты</h3>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Icon name="Phone" className="text-primary" size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">Телефон</h4>
-                      <a href="tel:+79991234567" className="text-lg text-primary hover:underline">
-                        +7 (999) 123-45-67
-                      </a>
-                      <p className="text-sm text-muted-foreground mt-1">Ежедневно с 8:00 до 22:00</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
-                      <Icon name="MessageCircle" className="text-green-600" size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">WhatsApp</h4>
-                      <a href="https://wa.me/79991234567" className="text-lg text-green-600 hover:underline">
-                        Написать в WhatsApp
-                      </a>
-                      <p className="text-sm text-muted-foreground mt-1">Быстрый ответ в мессенджере</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Icon name="Mail" className="text-primary" size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">Email</h4>
-                      <a href="mailto:info@remontholod.ru" className="text-lg text-primary hover:underline">
-                        info@remontholod.ru
-                      </a>
-                      <p className="text-sm text-muted-foreground mt-1">Ответим в течение часа</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Icon name="MapPin" className="text-primary" size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">Адрес</h4>
-                      <p className="text-muted-foreground">Москва и Московская область</p>
-                      <p className="text-sm text-muted-foreground mt-1">Выезд на дом</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="mt-6 pt-6 border-t">
+                <p className="text-sm text-muted-foreground text-center">
+                  Или позвоните нам прямо сейчас:
+                </p>
+                <a 
+                  href="tel:+79001234567" 
+                  className="flex items-center justify-center gap-2 mt-3 text-lg font-bold text-primary hover:underline"
+                >
+                  <Icon name="Phone" size={20} />
+                  +7 (900) 123-45-67
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <footer className="bg-secondary text-white py-12">
+      <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center text-foreground mb-12">Почему выбирают нас</h2>
+          
           <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Icon name="Refrigerator" size={32} />
-                <span className="text-xl font-bold">РемонтХолод</span>
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
+                <Icon name="ThumbsUp" size={32} className="text-primary" />
               </div>
-              <p className="text-white/80">
-                Профессиональный ремонт холодильников в Москве с 2008 года
+              <h3 className="text-xl font-semibold text-foreground mb-3">Профессионализм</h3>
+              <p className="text-muted-foreground">
+                Сертифицированные мастера с опытом работы более 10 лет
               </p>
             </div>
-            <div>
-              <h4 className="font-semibold mb-4">Навигация</h4>
-              <ul className="space-y-2 text-white/80">
-                <li>
-                  <a href="#services" className="hover:text-white transition-colors">
-                    Услуги
-                  </a>
-                </li>
-                <li>
-                  <a href="#advantages" className="hover:text-white transition-colors">
-                    Преимущества
-                  </a>
-                </li>
-                <li>
-                  <a href="#contact" className="hover:text-white transition-colors">
-                    Контакты
-                  </a>
-                </li>
-              </ul>
+
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
+                <Icon name="Zap" size={32} className="text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Оперативность</h3>
+              <p className="text-muted-foreground">
+                Выезд мастера в течение 2 часов. Большинство ремонтов — за один визит
+              </p>
             </div>
-            <div>
-              <h4 className="font-semibold mb-4">Контакты</h4>
-              <ul className="space-y-2 text-white/80">
-                <li>+7 (999) 123-45-67</li>
-                <li>info@remontholod.ru</li>
-                <li>Москва, выезд на дом</li>
-              </ul>
+
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
+                <Icon name="BadgeCheck" size={32} className="text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Надежность</h3>
+              <p className="text-muted-foreground">
+                Гарантия на все работы и запчасти. Прозрачное ценообразование
+              </p>
             </div>
-          </div>
-          <div className="border-t border-white/20 mt-8 pt-8 text-center text-white/60">
-            <p>&copy; 2024 РемонтХолод. Все права защищены.</p>
           </div>
         </div>
-      </footer>
+      </section>
+
+      <Footer />
     </div>
   );
 };
